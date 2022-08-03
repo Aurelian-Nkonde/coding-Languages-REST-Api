@@ -52,8 +52,14 @@ namespace codingLanguages.Controllers
         [HttpPost]
         public ActionResult CreateLanguage(Language languageInput)
         {
-            _repoInterface.CreateLanguage(languageInput);
-            return CreatedAtAction(nameof(GetLanguage), new{id = languageInput.Id}, languageInput);
+            var totalLanguagesStored = _repoInterface.GetListOfLanguages().Count();
+            if(totalLanguagesStored <= 15)
+            {
+                _repoInterface.CreateLanguage(languageInput);
+                return CreatedAtAction(nameof(GetLanguage), new{id = languageInput.Id}, languageInput);
+            }
+            return BadRequest();
+           
         }
 
 
