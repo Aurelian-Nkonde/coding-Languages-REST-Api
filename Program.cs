@@ -7,7 +7,13 @@ using codingLanguages.Repos;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddCors(options => {
+    options.AddDefaultPolicy(builder => {
+        builder.WithOrigins("http://localhost:4200").
+        AllowAnyMethod().
+        AllowAnyHeader();
+    });
+});
 builder.Services.AddControllers();
 builder.Services.AddScoped<ILanguageRepo, LanguageSQL>();
 builder.Services.AddDbContext<AppDbContext>(opt => 
@@ -26,6 +32,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 

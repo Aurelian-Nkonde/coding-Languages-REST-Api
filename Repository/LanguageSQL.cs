@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using codingLanguages.Data;
 using codingLanguages.Models;
@@ -16,29 +17,29 @@ namespace codingLanguages.Repos
             _databaseContext = databaseCcontext;
         }
 
-        public void CreateLanguage(Language dataInput)
+        public async Task CreateLanguage(Language dataInput)
         {
             _databaseContext.languages.Add(dataInput);
-            _databaseContext.SaveChanges();
+          await  _databaseContext.SaveChangesAsync();
         }
 
-        public void DeleteALanguage(Language dataInput)
+        public async Task DeleteALanguage(Language dataInput)
         {
             _databaseContext.languages.Remove(dataInput);
-            _databaseContext.SaveChanges();
+           await _databaseContext.SaveChangesAsync();
         }
 
 
-        public IEnumerable<Language> GetListOfLanguages()
+        public async Task<IEnumerable<Language>> GetListOfLanguages()
         {
-            var LanguageList = _databaseContext.languages.ToList();
+            var LanguageList = await _databaseContext.languages.ToListAsync();
             return LanguageList;
         }
 
 
-        public Language GetSingleLanguage(int? id)
+        public async Task<Language> GetSingleLanguage(int? id)
         {
-            var language = _databaseContext.languages.FirstOrDefault(e => e.Id == id);
+            var language = await _databaseContext.languages.FirstOrDefaultAsync(e => e.Id == id);
             if(language != null)
             {
                 return language;
@@ -53,16 +54,16 @@ namespace codingLanguages.Repos
         }
 
 
-        public bool SaveChanges()
+        public async Task<bool> SaveChanges()
         {
-            return (_databaseContext.SaveChanges() >= 1);
+            return (await _databaseContext.SaveChangesAsync() >= 1);
         }
 
 
-        public void UpdateLanguage(Language dataInput)
+        public async Task UpdateLanguage(Language dataInput)
         {
             _databaseContext.Entry(dataInput).State = EntityState.Modified;
-            _databaseContext.SaveChanges();
+           await _databaseContext.SaveChangesAsync();
         }
     }
 }

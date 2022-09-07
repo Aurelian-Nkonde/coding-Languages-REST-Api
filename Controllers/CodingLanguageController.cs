@@ -30,33 +30,38 @@ namespace codingLanguages.Controllers
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<Language>> CodingLanguagesList()
+        public async Task<ActionResult<IEnumerable<Language>>> CodingLanguagesList()
         {
-            var dataList = _repoInterface.GetListOfLanguages();
+            var dataList = await _repoInterface.GetListOfLanguages();
             return Ok(dataList);
         }
 
 
         [HttpGet("{id}")]
-        public ActionResult<Language> GetLanguage(int? id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Language>> Language(int? id)
         {
             if(id == 0 && id == null)
             {
                 return BadRequest();
             }
-            return _repoInterface.GetSingleLanguage(id);
+            return await _repoInterface.GetSingleLanguage(id);
 
         }
 
 
         [HttpPost]
-        public ActionResult CreateLanguage(Language languageInput)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<ActionResult> CreateLanguage(Language languageInput)
         {
-            var totalLanguagesStored = _repoInterface.GetListOfLanguages().Count();
-            if(totalLanguagesStored <= 15)
+            var totalLanguagesStored = await _repoInterface.GetListOfLanguages();
+            var totalLength = totalLanguagesStored.Count();
+            if(totalLength <= 15)
             {
-                _repoInterface.CreateLanguage(languageInput);
-                return CreatedAtAction(nameof(GetLanguage), new{id = languageInput.Id}, languageInput);
+                await _repoInterface.CreateLanguage(languageInput);
+                return CreatedAtAction(nameof(Language), new{id = languageInput.Id}, languageInput);
             }
             return BadRequest();
            
@@ -65,29 +70,34 @@ namespace codingLanguages.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public ActionResult DeleteLanguage (int? id)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult> DeleteLanguage (int? id)
         {
             if(id == 0)
             {
                 return BadRequest();
             }
-            var language = _repoInterface.GetSingleLanguage(id);
+            var language = await _repoInterface.GetSingleLanguage(id);
             if(language == null){ return NotFound(); }
-             _repoInterface.DeleteALanguage(language);
+             await _repoInterface.DeleteALanguage(language);
              return NoContent();
         }
 
 
         [HttpPut]
         [Route("{id}")]
-        public ActionResult UpdateLanguage(int? id, Language languageInput)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult> UpdateLanguage(int? id, Language languageInput)
         {
             if(id == 0){ return NotFound(); }
             if(id != languageInput.Id)
             {
                 return NotFound();
             }
-            _repoInterface.UpdateLanguage(languageInput);
+            await _repoInterface.UpdateLanguage(languageInput);
             return NoContent();
         }
 

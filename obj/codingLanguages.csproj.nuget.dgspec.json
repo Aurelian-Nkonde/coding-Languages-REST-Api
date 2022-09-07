@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\aconte\\desktop\\projects\\codinglanguages\\codingLanguages.csproj": {}
+    "C:\\Users\\aconte\\Desktop\\projects\\codingLanguages\\codingLanguages.csproj": {}
   },
   "projects": {
-    "C:\\Users\\aconte\\desktop\\projects\\codinglanguages\\codingLanguages.csproj": {
+    "C:\\Users\\aconte\\Desktop\\projects\\codingLanguages\\codingLanguages.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\aconte\\desktop\\projects\\codinglanguages\\codingLanguages.csproj",
+        "projectUniqueName": "C:\\Users\\aconte\\Desktop\\projects\\codingLanguages\\codingLanguages.csproj",
         "projectName": "codingLanguages",
-        "projectPath": "C:\\Users\\aconte\\desktop\\projects\\codinglanguages\\codingLanguages.csproj",
+        "projectPath": "C:\\Users\\aconte\\Desktop\\projects\\codingLanguages\\codingLanguages.csproj",
         "packagesPath": "C:\\Users\\aconte\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\aconte\\desktop\\projects\\codinglanguages\\obj\\",
+        "outputPath": "C:\\Users\\aconte\\Desktop\\projects\\codingLanguages\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\aconte\\AppData\\Roaming\\NuGet\\NuGet.Config"
